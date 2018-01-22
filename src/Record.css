@@ -1,4 +1,4 @@
-.Record {
+.RecordCard, .RecordListItem {
     display: flex;
     flex-direction: column;
     width: 320px;
@@ -8,6 +8,12 @@
     padding: 12px;
     color: #ffffff;
     background: #470939;
+}
+
+.RecordListItem {
+    height: 120px;
+    width: 100%;
+    margin: 12px 6px;
 }
 
     .RecordName {

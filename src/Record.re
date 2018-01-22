@@ -5,7 +5,7 @@ open Utils;
 let component = ReasonReact.statelessComponent("Record");
 
 
-let make = (~record: RecordsData.record, _children) => {
+let make = (~record: RecordsData.record, ~viewMode: RecordsData.view, _children) => {
     let renderArtistsList = (artists: array(RecordsData.artist)) => {
         artists
         |> Array.mapi((index, artist: RecordsData.artist) =>
@@ -19,10 +19,19 @@ let make = (~record: RecordsData.record, _children) => {
     {
     ...component,
     render: (_self) =>
-        <div className="Record">
-            <div className="RecordName">(record.name |> textEl)</div>
-            <div className="RecordArtists">(record.artists |> renderArtistsList)</div>
-            <div className="RecordUserInfo">({j| Added $timeFromNow |j} |> textEl)</div>
-        </div>
+        switch viewMode {
+        | RecordsData.List =>
+            <div className="RecordListItem">
+                <div className="RecordName">(record.name |> textEl)</div>
+                <div className="RecordArtists">(record.artists |> renderArtistsList)</div>
+                <div className="RecordUserInfo">({j| Added $timeFromNow |j} |> textEl)</div>
+            </div>
+        | RecordsData.Card =>
+            <div className="RecordCard">
+                <div className="RecordName">(record.name |> textEl)</div>
+                <div className="RecordArtists">(record.artists |> renderArtistsList)</div>
+                <div className="RecordUserInfo">({j| Added $timeFromNow |j} |> textEl)</div>
+            </div>
+        }
     }
 }

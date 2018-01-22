@@ -13,6 +13,9 @@ type record = {
 };
 
 
+type view = List | Card;
+
+
 type topRecords = array(record);
 
 
