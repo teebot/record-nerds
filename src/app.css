@@ -1,0 +1,24 @@
+.App {
+}
+
+.App-header {
+  background-color: #222;
+  padding: 12px;
+  line-height: 24px;
+}
+
+  .App-header a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .App-header a h1 {
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+  }
+
+.Container {
+  margin: 0 auto;
+  width: 1040px;
+}

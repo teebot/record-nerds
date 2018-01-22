@@ -1,0 +1,4 @@
+.TopRecords {
+    display: flex;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,24 @@
+.Record {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    height: 320px;
+    margin: 12px;
+    border: 1px solid #eee;
+    padding: 12px;
+    color: #ffffff;
+    background: #470939;
+}
+
+    .RecordName {
+        font-size: 32px;
+        font-weight: 700;
+    }
+
+    .RecordArtists {
+        font-size: 20px;
+    }
+
+    .RecordUserInfo {
+        font-size: 11px;
+    }
