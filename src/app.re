@@ -38,7 +38,7 @@ let make = (_children) => {
     switch route {
       | Home =>
         <a href="/tops">
-          <h2>("Top Albums" |> textEl)</h2>
+          <h2>("Top Albums 2" |> textEl)</h2>
         </a>
       | Tops =>
         <Tops />
@@ -56,9 +56,10 @@ let make = (_children) => {
     initialState: () => {route: Home},
     render: (self) => {
       <div className="App">
-        <div className="App-header">
+        <div className="AppHeaderContainer">
           <div className="Container">
-            <a href="/">
+            <a href="/" className="AppHeaderLogo">
+              <img src=logo alt="logo" className="AppHeaderLogoImage" />
               <h1>("Record Nerds" |> textEl)</h1>
             </a>
           </div>

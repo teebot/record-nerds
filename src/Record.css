@@ -1,13 +1,17 @@
 .RecordCard, .RecordListItem {
     display: flex;
     flex-direction: column;
-    width: 320px;
-    height: 320px;
-    margin: 12px;
+    width: 330px;
+    height: 330px;
+    margin: 12px 0;
     border: 1px solid #eee;
     padding: 12px;
     color: #ffffff;
     background: #470939;
+}
+
+.RecordCard:nth-child(3n+2) {
+    margin: 12px 24px;
 }
 
 .RecordListItem {
