@@ -1,4 +1,6 @@
 [%bs.raw {|require('./Tops.css')|}];
+[@bs.module] external grid : string = "./grid.svg";
+[@bs.module] external list : string = "./list.svg";
 open Utils;
 
 
@@ -28,6 +30,15 @@ let make = (_children) => {
     }
   };
 
+  let renderViewIcon = (viewMode, ~clickAction) => {
+    switch viewMode {
+    | RecordsData.Card =>
+      (<img src=list onClick=clickAction className="ViewModeIcon" alt="logo" />)
+    | RecordsData.List =>
+      (<img src=grid onClick=clickAction className="ViewModeIcon" alt="logo" />)
+    }
+  };
+
   {
   ...component,
 
@@ -45,6 +56,8 @@ let make = (_children) => {
       | None => [||]
       }
     }; */
+    
+
     let toggleState = view =>
       switch view {
       | RecordsData.List => RecordsData.Card
@@ -71,8 +84,11 @@ let make = (_children) => {
 
   render: (self) => {
     <div>
-      <h2>("My Top Albums" |> textEl)</h2>
-      <button onClick=(self.reduce((_event) => ToggleView))>("Toggle View" |> textEl)</button>
+      <div className="TopsHeader">
+        <h2>("My Top Albums" |> textEl)</h2>
+        (renderViewIcon(self.state.viewMode, ~clickAction=self.reduce((_event) => ToggleView)))
+      </div>
+      
       <div className="TopRecords">
         (renderRecordList(self.state))
       </div>

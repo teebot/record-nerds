@@ -2,3 +2,19 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.TopsHeader {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0 20px;
+}
+
+    .TopsHeader h2 {
+        flex: 1 0;
+    }
+
+.ViewModeIcon {
+    width: 24px;
+    cursor: pointer;
+}
