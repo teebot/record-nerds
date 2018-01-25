@@ -6,6 +6,7 @@ let component = ReasonReact.statelessComponent("Record");
 
 
 let make = (~record: RecordsData.record, ~viewMode: RecordsData.view, _children) => {
+
     let renderArtistsList = (artists: array(RecordsData.artist)) => {
         artists
         |> Array.mapi((index, artist: RecordsData.artist) =>
@@ -16,18 +17,27 @@ let make = (~record: RecordsData.record, ~viewMode: RecordsData.view, _children)
 
     let timeFromNow = record.timeReleased |> fromNow;
 
+    let colorOrDefault = color => switch record.backgroundColor {
+        | None => "auto"
+        | Some(color) => color
+        };
+
     {
     ...component,
     render: (_self) =>
         switch viewMode {
         | RecordsData.List =>
-            <div className="RecordListItem">
+            <div className="RecordListItem" style=(
+                ReactDOMRe.Style.make(~backgroundColor=record.backgroundColor |> colorOrDefault, ~fontSize="68px", ())
+            )>
                 <div className="RecordName">(record.name |> textEl)</div>
                 <div className="RecordArtists">(record.artists |> renderArtistsList)</div>
                 <div className="RecordUserInfo">({j| Added $timeFromNow |j} |> textEl)</div>
             </div>
         | RecordsData.Card =>
-            <div className="RecordCard">
+            <div className="RecordCard" style=(
+                ReactDOMRe.Style.make(~backgroundColor=record.backgroundColor |> colorOrDefault, ~fontSize="68px", ())
+            )>
                 <div className="RecordName">(record.name |> textEl)</div>
                 <div className="RecordArtists">(record.artists |> renderArtistsList)</div>
                 <div className="RecordUserInfo">({j| Added $timeFromNow |j} |> textEl)</div>

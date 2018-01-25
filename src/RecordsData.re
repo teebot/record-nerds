@@ -28,7 +28,7 @@ let fetchTopRecords = (callback) => {
                 id: "z9"
             }|],
             name: "Laughing at the system",
-            backgroundColor: Some("#FF0000"),
+            backgroundColor: Some("#98493b"),
             timeReleased: 1516628555
         },
         { 
@@ -49,7 +49,7 @@ let fetchTopRecords = (callback) => {
             }|],
             name: "Liberation",
             timeReleased: 1516540000,
-            backgroundColor: Some("#FF0000"),
+            backgroundColor: Some("#82ad8a"),
         },
         { 
             id: "a2", 
@@ -59,7 +59,7 @@ let fetchTopRecords = (callback) => {
             }|],
             name: "Pet Sounds",
             timeReleased: 1516000000,
-            backgroundColor: Some("#FF0000"),
+            backgroundColor: Some("#829ea2"),
         },
         { 
             id: "a2", 
@@ -69,7 +69,7 @@ let fetchTopRecords = (callback) => {
             }|],
             name: "Underground",
             timeReleased: 1516620055,
-            backgroundColor: Some("#FF0000"),
+            backgroundColor: Some("#82ad8a"),
         },
         { 
             id: "a2", 
@@ -79,7 +79,7 @@ let fetchTopRecords = (callback) => {
             }|],
             name: "Guns and Crepe Flambee",
             timeReleased: 1516600000,
-            backgroundColor: Some("#FF0000"),
+            backgroundColor: Some("#829ea2"),
         },
         { 
             id: "a1", 
@@ -88,7 +88,7 @@ let fetchTopRecords = (callback) => {
                 id: "z9"
             }|],
             name: "Laughing at the system",
-            backgroundColor: Some("#FF0000"),
+            backgroundColor: Some("#82ad8a"),
             timeReleased: 1516628555
         },
         { 
@@ -109,7 +109,7 @@ let fetchTopRecords = (callback) => {
             }|],
             name: "Liberation",
             timeReleased: 1516540000,
-            backgroundColor: Some("#FF0000"),
+            backgroundColor: Some("#98493b"),
         },
         { 
             id: "a2", 
@@ -119,7 +119,7 @@ let fetchTopRecords = (callback) => {
             }|],
             name: "Pet Sounds",
             timeReleased: 1516000000,
-            backgroundColor: Some("#FF0000"),
+            backgroundColor: Some("#829ea2"),
         },
         { 
             id: "a2", 
@@ -129,7 +129,7 @@ let fetchTopRecords = (callback) => {
             }|],
             name: "Underground",
             timeReleased: 1516620055,
-            backgroundColor: Some("#FF0000"),
+            backgroundColor: Some("#98493b"),
         },
         { 
             id: "a2", 
@@ -139,7 +139,7 @@ let fetchTopRecords = (callback) => {
             }|],
             name: "Guns and Crepe Flambee",
             timeReleased: 1516600000,
-            backgroundColor: Some("#FF0000"),
+            backgroundColor: Some("#829ea2"),
         },
     |]);
 };
