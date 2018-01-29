@@ -18,7 +18,7 @@ let make = (~record: RecordsData.record, ~viewMode: RecordsData.view, _children)
     let timeFromNow = record.timeReleased |> fromNow;
 
     let colorOrDefault = color => switch record.backgroundColor {
-        | None => "auto"
+        | None => "#470939"
         | Some(color) => color
         };
 

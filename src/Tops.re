@@ -12,7 +12,7 @@ type state = {
 
 type action =
   | Loaded(RecordsData.topRecords)
-  /* | Sort */
+  | Sort
   | ToggleView;
 
 
@@ -48,15 +48,11 @@ let make = (_children) => {
   },
 
   reducer: (action, state) => {
-    /* let sortRecords = (records: option(RecordsData.topRecords)) => {
-      switch records {
-      | Some(records) =>
-        records
-        |> Array.sort((recordA: RecordsData.record, recordB: RecordsData.record) => 1)
-      | None => [||]
-      }
-    }; */
-    
+    let sortRecords = (records) => {
+      Js.Array.sortInPlaceWith((a: RecordsData.record, b: RecordsData.record) => {
+      b.timeReleased - a.timeReleased
+      }, records);
+    };
 
     let toggleState = view =>
       switch view {
@@ -65,12 +61,19 @@ let make = (_children) => {
       };
 
     switch action {
-    | Loaded(data) => ReasonReact.Update({...state,
+    | Loaded(data) => 
+      Js.log(data);
+      ReasonReact.Update({...state,
         topRecords: Some(data)
       })
-    /* | Sort => ReasonReact.Update({
-        topRecords: sortRecords(state.topRecords)
-    }) */
+    | Sort => switch state.topRecords {
+        | Some(records) =>
+          let sorted = sortRecords(Array.copy(records));
+          ReasonReact.Update({...state,
+            topRecords: Some(sorted)
+          })
+        | None => ReasonReact.NoUpdate
+      }
     | ToggleView => ReasonReact.Update({...state,
         viewMode: toggleState(state.viewMode)
       })
@@ -87,6 +90,7 @@ let make = (_children) => {
       <div className="TopsHeader">
         <h2>("My Top Albums" |> textEl)</h2>
         (renderViewIcon(self.state.viewMode, ~clickAction=self.reduce((_event) => ToggleView)))
+        <a href="#" onClick=(self.reduce(records => Sort))>("Date added" |> textEl)</a>
       </div>
       
       <div className="TopRecords">
