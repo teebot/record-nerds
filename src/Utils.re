@@ -21,3 +21,32 @@ let textEl = ReasonReact.stringToElement;
 
 
 let arrayEl = ReasonReact.arrayToElement;
+
+
+let sortRecordsByDate = (records) => {
+  Js.Array.sortInPlaceWith((a: RecordsData.record, b: RecordsData.record) => {
+    b.timeReleased - a.timeReleased
+  }, records);
+};
+
+
+let sortRecordsByCustom = (records) => {
+  Js.Array.sortInPlaceWith((a: RecordsData.record, b: RecordsData.record) => {
+    if (a.id > b.id) {
+      1
+    }
+    else if (a.id < b.id) {
+      -1
+    }
+    else {
+      0
+    }
+  }, records);
+};
+
+
+let sortRecordsByReviews = (records) => {
+  Js.Array.sortInPlaceWith((a: RecordsData.record, b: RecordsData.record) => {
+    b.reviews - a.reviews
+  }, records);
+};

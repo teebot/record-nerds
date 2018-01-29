@@ -1,25 +1,30 @@
 [%bs.raw {|require('./Tops.css')|}];
 [@bs.module] external grid : string = "./grid.svg";
 [@bs.module] external list : string = "./list.svg";
+[@bs.module] external caretDown : string = "./caret-down.svg";
 open Utils;
+
+
+type sortType = DateAdded | Reviews | Custom;
 
 
 type state = {
   topRecords: option(RecordsData.topRecords),
-  viewMode: RecordsData.view
+  viewMode: RecordsData.view,
+  activeSort: sortType
 };
 
 
 type action =
   | Loaded(RecordsData.topRecords)
-  | Sort
+  | Sort(sortType)
   | ToggleView;
 
 
 let component = ReasonReact.reducerComponent("Tops");
 let make = (_children) => {
 
-  let renderRecordList = (state) => {
+  let renderRecordList = (state) =>
     switch state.topRecords {
     | Some(records) =>
       records
@@ -27,76 +32,102 @@ let make = (_children) => {
         <Record key=(index |> string_of_int) record viewMode=(state.viewMode) />)
       |> arrayEl
     | None => ReasonReact.nullElement
-    }
-  };
+    };
 
-  let renderViewIcon = (viewMode, ~clickAction) => {
+  let renderViewIcon = (viewMode, ~clickAction) =>
     switch viewMode {
     | RecordsData.Card =>
       (<img src=list onClick=clickAction className="ViewModeIcon" alt="logo" />)
     | RecordsData.List =>
       (<img src=grid onClick=clickAction className="ViewModeIcon" alt="logo" />)
-    }
-  };
-
-  {
-  ...component,
-
-  initialState: () => {
-    topRecords: None,
-    viewMode: Card
-  },
-
-  reducer: (action, state) => {
-    let sortRecords = (records) => {
-      Js.Array.sortInPlaceWith((a: RecordsData.record, b: RecordsData.record) => {
-      b.timeReleased - a.timeReleased
-      }, records);
     };
 
-    let toggleState = view =>
-      switch view {
-      | RecordsData.List => RecordsData.Card
-      | RecordsData.Card  => RecordsData.List
-      };
+  let renderSortCaret = (activeSort: sortType, sort: sortType) =>
+    (activeSort == sort ? <img src=caretDown /> : ReasonReact.nullElement);
 
-    switch action {
-    | Loaded(data) => 
-      Js.log(data);
-      ReasonReact.Update({...state,
-        topRecords: Some(data)
-      })
-    | Sort => switch state.topRecords {
-        | Some(records) =>
-          let sorted = sortRecords(Array.copy(records));
-          ReasonReact.Update({...state,
-            topRecords: Some(sorted)
-          })
-        | None => ReasonReact.NoUpdate
-      }
-    | ToggleView => ReasonReact.Update({...state,
-        viewMode: toggleState(state.viewMode)
-      })
-    }
-  },
+  {
+    ...component,
 
-  didMount: (self) => {
-    RecordsData.fetchTopRecords(self.reduce(records => Loaded(records)));
-    ReasonReact.NoUpdate
-  },
+    initialState: () => {
+      topRecords: None,
+      viewMode: Card,
+      activeSort: Custom
+    },
 
-  render: (self) => {
-    <div>
-      <div className="TopsHeader">
-        <h2>("My Top Albums" |> textEl)</h2>
-        (renderViewIcon(self.state.viewMode, ~clickAction=self.reduce((_event) => ToggleView)))
-        <a href="#" onClick=(self.reduce(records => Sort))>("Date added" |> textEl)</a>
-      </div>
+    reducer: (action, state) => {
       
-      <div className="TopRecords">
-        (renderRecordList(self.state))
+      let toggleState = view =>
+        switch view {
+        | RecordsData.List => RecordsData.Card
+        | RecordsData.Card  => RecordsData.List
+        };
+
+      switch action {
+      | Loaded(data) => 
+        Js.log(data);
+        ReasonReact.Update({...state,
+          topRecords: Some(data)
+        })
+      | Sort(DateAdded) => switch state.topRecords {
+          | Some(records) =>
+            let sorted = sortRecordsByDate(Array.copy(records));
+            ReasonReact.Update({...state,
+              topRecords: Some(sorted),
+              activeSort: DateAdded
+            })
+          | None => ReasonReact.NoUpdate
+        }
+      | Sort(Custom) => switch state.topRecords {
+          | Some(records) =>
+            let sorted = sortRecordsByCustom(Array.copy(records));
+            ReasonReact.Update({...state,
+              topRecords: Some(sorted),
+              activeSort: Custom
+            })
+          | None => ReasonReact.NoUpdate
+        }
+      | Sort(Reviews) => switch state.topRecords {
+          | Some(records) =>
+            let sorted = sortRecordsByReviews(Array.copy(records));
+            ReasonReact.Update({...state,
+              topRecords: Some(sorted),
+              activeSort: Reviews
+            })
+          | None => ReasonReact.NoUpdate
+        }
+      | ToggleView => ReasonReact.Update({...state,
+          viewMode: toggleState(state.viewMode)
+        })
+      }
+    },
+
+    didMount: (self) => {
+      RecordsData.fetchTopRecords(self.reduce(records => Loaded(records)));
+      ReasonReact.NoUpdate;
+    },
+
+    render: (self) => {
+      <div>
+        <div className="TopsHeader">
+          <h2>("My Top Albums" |> textEl)</h2>
+          (renderViewIcon(self.state.viewMode, ~clickAction=self.reduce((_event) => ToggleView)))
+        </div>
+        <div className="TopsSorts">
+          <div className="TopsSortsLink">
+            <a href="#" onClick=(self.reduce(_records => Sort(Custom)))>("Custom" |> textEl)</a>(renderSortCaret(self.state.activeSort, Custom))
+          </div>
+          <div className="TopsSortsLink">
+            <a href="#" onClick=(self.reduce(_records => Sort(DateAdded)))>("Most recent" |> textEl)</a>(renderSortCaret(self.state.activeSort, DateAdded))
+          </div>
+          <div className="TopsSortsLink">
+            <a href="#" onClick=(self.reduce(_records => Sort(Reviews)))>("# Reviews" |> textEl)</a>(renderSortCaret(self.state.activeSort, Reviews))
+          </div>
+        </div>
+        
+        <div className="TopRecords">
+          (renderRecordList(self.state))
+        </div>
       </div>
-    </div>
     }
   }
 };

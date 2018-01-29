@@ -13,6 +13,26 @@
         flex: 1 0;
     }
 
+.TopsSorts {
+    display: flex;
+}
+
+    .TopsSorts img {
+        width: 10px;
+        margin-left: 2px;
+        margin-right: -20px;
+    }
+
+    .TopsSortsLink {
+        margin-right: 20px;
+        font-size: 12px;
+    }
+
+    .TopsSortsLink a {
+        color: #888;
+        text-decoration: none;
+    }
+
 .ViewModeIcon {
     width: 24px;
     cursor: pointer;

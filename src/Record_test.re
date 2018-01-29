@@ -11,7 +11,8 @@ test("addition", (_) => {
             }|],
             name: "Laughing at the system",
             backgroundColor: Some("#FF0000"),
-            timeReleased: 1516628555
+            timeReleased: 1516628555,
+            reviews: 2
         },
         ~viewMode = RecordsData.Card
     );

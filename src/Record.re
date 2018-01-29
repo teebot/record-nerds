@@ -41,6 +41,7 @@ let make = (~record: RecordsData.record, ~viewMode: RecordsData.view, _children)
                 <div className="RecordName">(record.name |> textEl)</div>
                 <div className="RecordArtists">(record.artists |> renderArtistsList)</div>
                 <div className="RecordUserInfo">({j| Added $timeFromNow |j} |> textEl)</div>
+                <div className="RecordUserInfo">((record.reviews |> string_of_int) ++ " reviews" |> textEl)</div>
             </div>
         }
     }
